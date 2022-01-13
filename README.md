@@ -1,5 +1,12 @@
 # Disaster Response Pipeline Project
+### Description
+The dataset contains pre-labelled tweets and messages from real-life disasters provided by Fiqure Eight. The goal of the project is to build a model that categorize messages to disaster categories using best Data Engineering practices. This Project is part of Data Science Nanodegree Program by Udacity.
 
+The Project is divided in the following Sections:
+
+-ETL Pipeline to extract data, clean data and save them in a database file
+-Machine Learning Pipeline to train a model able to classify text message in categories of disasters.
+-Web App for visualizations.
 ### Dependencies
 -Python 3.5+ (I used Python 3.10)
 
