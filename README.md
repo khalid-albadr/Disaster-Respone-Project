@@ -1,11 +1,11 @@
 # Disaster Response Pipeline Project
 
-# Dependencies
-Python 3.5+ (I used Python 3.10)
-Machine Learning Libraries: NumPy,Pandas, Sciki-Learn
-Natural Language Process Libraries: NLTK
-SQLlite Database Libraqries: SQLalchemy
-Web App and Data Visualization: Flask, Plotly
+### Dependencies
+1.Python 3.5+ (I used Python 3.10)
+2.Machine Learning Libraries: NumPy,Pandas, Sciki-Learn
+3.Natural Language Process Libraries: NLTK
+4.SQLlite Database Libraqries: SQLalchemy
+5.Web App and Data Visualization: Flask, Plotly
 
 ### Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
