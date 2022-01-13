@@ -2,9 +2,13 @@
 
 ### Dependencies
 1.Python 3.5+ (I used Python 3.10)
+
 2.Machine Learning Libraries: NumPy,Pandas, Sciki-Learn
+
 3.Natural Language Process Libraries: NLTK
+
 4.SQLlite Database Libraqries: SQLalchemy
+
 5.Web App and Data Visualization: Flask, Plotly
 
 ### Instructions:
