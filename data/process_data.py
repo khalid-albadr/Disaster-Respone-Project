@@ -1,16 +1,63 @@
 import sys
-
+import pandas as pd
+from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
-    pass
-
+    '''
+    Loads the data and Merges message and categories datasets on id of message
+    INPUT 
+        messages_filepath - location of messages dataset
+        categories_filepath - location of categories dataset
+    OUTPUT
+        df - dataframe with merged messages and categories datasets
+    '''
+    messages = pd.read_csv(messages_filepath)
+    categories = pd.read_csv(categories_filepath)
+    df = pd.merge(messages,categories,on='id')
+    return df
 
 def clean_data(df):
-    pass
+    '''
+    Cleans data: Separates categories on ;, extracts column names from row and replace column names, extracts category values, and removes duplicates
+    INPUT 
+        df - dataframe of merged messages and categories datasets
+    OUTPUT
+        df - dataframe with cleaned data
+    '''
+    categories  = df.categories.str.split(pat = ';', expand = True)
+    
+    # select the first row of the categories dataframe
+    row = categories.iloc[0,:]
+    category_colnames = row.apply(lambda x:x[:-2])
+    categories.columns = category_colnames
+    
+    for column in categories:
+        # set each value to be the last character of the string and convert to int
+        categories[column] = categories[column].str[-1]
+        categories[column] = categories[column].astype(int)
+    # for column in categories.columns:
+    #     categories.loc[(categories[column]!=1)&(categories[column]!=0)] = 1
+        
+    df.drop(columns = 'categories',inplace=True)
+    df = pd.concat([df, categories], axis=1)
+    
+    df.drop_duplicates(inplace=True)
+    
+    return df
 
 
 def save_data(df, database_filename):
-    pass  
+    '''
+    Saves cleaned data to sql database table
+    INPUT 
+        df - location of cleaned dataset
+        database_filename - location to create database
+    OUTPUT
+        None
+        Saves data to clean_disaster table at database location
+    '''
+    connect = create_engine('sqlite:///' + database_filename) 
+    df.to_sql('clean_table', connect, index=False, if_exists = 'replace')   
 
 
 def main():
