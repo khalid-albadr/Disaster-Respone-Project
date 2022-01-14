@@ -36,7 +36,7 @@ def clean_data(df):
         categories[column] = categories[column].str[-1]
         categories[column] = categories[column].astype(int)
  
-        
+    categories.loc[(categories['related']!=1)&(categories['related']!=0)] = 1    
     df.drop(columns = 'categories',inplace=True)
     df = pd.concat([df, categories], axis=1)
     

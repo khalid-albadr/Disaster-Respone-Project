@@ -1,3 +1,4 @@
+from inspect import Parameter
 import sys
 import pandas as pd
 import numpy as np
@@ -84,12 +85,12 @@ class StartingVerbExtractor(BaseEstimator, TransformerMixin):
         X_tagged = pd.Series(X).apply(self.starting_verb)
         return pd.DataFrame(X_tagged)
 
-def build_model(clf=AdaBoostClassifier(),params=None):
+def build_model(clf=RandomForestClassifier(),params=None):
     """
     Build Model function
 
     Arguments:
-    clf -> an estimator of choice , Adaboost is default
+    clf -> an estimator of choice , RandomForest is default
     params -> a dict/grid of parameters for the selected classfier, if given it will run a gridSearchCV and return the best model of the params grid.
 
     Output:
@@ -158,7 +159,11 @@ def main():
         print('Building model...')
         #you can optionally assign any classifier you want and pass it as an arguement, 
         # aswell as paramater dict if you want gridSearch and pass it to arguments
-        model = build_model()
+        parameter_grid = {
+    'clf__estimator__n_estimators': [40,50,100],
+    'clf__estimator__min_samples_leaf':[2,3]
+}
+        model = build_model(params=parameter_grid)
         
         print('Training model...')
         model.fit(X_train, Y_train)
