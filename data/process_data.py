@@ -18,7 +18,7 @@ def load_data(messages_filepath, categories_filepath):
 
 def clean_data(df):
     '''
-    Cleans data: Separates categories on ;, extracts column names from row and replace column names, extracts category values, and removes duplicates
+    Cleans data: extracts column names from row and replace column names, extracts category values, and removes duplicates
     INPUT 
         df - dataframe of merged messages and categories datasets
     OUTPUT
@@ -35,8 +35,7 @@ def clean_data(df):
         # set each value to be the last character of the string and convert to int
         categories[column] = categories[column].str[-1]
         categories[column] = categories[column].astype(int)
-    # for column in categories.columns:
-    #     categories.loc[(categories[column]!=1)&(categories[column]!=0)] = 1
+ 
         
     df.drop(columns = 'categories',inplace=True)
     df = pd.concat([df, categories], axis=1)

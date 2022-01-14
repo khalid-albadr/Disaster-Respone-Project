@@ -21,18 +21,18 @@ def load_data(database_filepath):
     Load data function from database file
     
     Arguments:
-        database_filepath -> path to SQLite db
+        database_filepath -> path to db file
     Output:
         X -> feature DataFrame
         Y -> label DataFrame
-        category_names -> Y columns
+       
     """
     engine = create_engine('sqlite:///'+database_filepath)
     df = pd.read_sql_table('clean_table',engine)
     X = df['message']
     Y = df.iloc[:,4:]
-    category_names = Y.columns
-    return X, Y, category_names
+    
+    return X, Y
 
 
 def tokenize(text):
@@ -42,7 +42,7 @@ def tokenize(text):
     Arguments:
         text -> list of text messages (english)
     Output:
-        clean_tokens -> tokenized text, clean for ML modeling
+        clean_tokens -> list of tokenized text
     """
       
     text = re.sub(r"[^a-zA-Z0-9]", " ", text)
@@ -59,6 +59,7 @@ def tokenize(text):
 class StartingVerbExtractor(BaseEstimator, TransformerMixin):
     """
     Starting Verb Extractor class
+
     #Referenced from udacity classes of ML pipeline!
 
     This class used to improve the model/pipeline , 
@@ -86,7 +87,12 @@ class StartingVerbExtractor(BaseEstimator, TransformerMixin):
 def build_model(clf=AdaBoostClassifier(),params=None):
     """
     Build Model function
-    
+
+    Arguments:
+    clf -> an estimator of choice , Adaboost is default
+    params -> a dict/grid of parameters for the selected classfier, if given it will run a gridSearchCV and return the best model of the params grid.
+
+    Output:
     This function output is a ML Pipeline that process text messages
     apply a classifier.
     """
